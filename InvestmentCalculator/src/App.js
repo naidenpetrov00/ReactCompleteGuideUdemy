@@ -1,23 +1,19 @@
 import CalculatorForm from "./components/Calculator/CalculatorForm";
-import Header from "./UI/Header/Header";
+import Header from "./components/UI/Header/Header";
 import ResultTable from "./components/Result/ResultTable";
 import { useState } from "react";
 
 function App() {
   const [yearlyData, setYearlyData] = useState([]);
 
-  const calculateHandler = (event) => {
-    event.preventDefault();
-
-    const userInput = event.target;
+  const calculateHandler = (userInput) => {
     const yearlyDataValue = []; // per-year results
 
-    let currentSavings = +userInput["current-savings"].value; // feel free to change the shape of this input object!
-    const yearlyContribution = +userInput["yearly-contribution"].value; // as mentioned: feel free to change the shape...
-    const expectedReturn = +userInput["expected-return"].value / 100;
-    const duration = +userInput["duration"].value;
+    let currentSavings = +userInput["current-savings"];
+    const yearlyContribution = +userInput["yearly-contribution"];
+    const expectedReturn = +userInput["expected-return"] / 100;
+    const duration = +userInput["duration"];
 
-    // The below code calculates yearly results (total savings, interest etc)
     for (let i = 0; i < duration; i++) {
       const yearlyInterest = currentSavings * expectedReturn;
       currentSavings += yearlyInterest + yearlyContribution;
@@ -28,6 +24,7 @@ function App() {
         yearlyContribution: yearlyContribution,
       });
     }
+
     setYearlyData(yearlyDataValue);
   };
   return (

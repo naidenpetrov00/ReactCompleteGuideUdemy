@@ -3,39 +3,39 @@ import React, { useState } from "react";
 import styles from "./CalculatorForm.module.css";
 
 function CalculatorForm(props) {
-  const [currSavings, setCurrSavings] = useState();
-  const [yearlySavings, setYearlySavings] = useState();
-  const [expectedInterest, setExpectedInterest] = useState();
-  const [investmentDuration, setInvestmentDuration] = useState();
+  const [userUnput, setUserInput] = useState({
+    "current-savings": 0,
+    "yearly-contribution": 0,
+    "expected-return": 0,
+    duration: 0,
+  });
 
-  const currSavingsChangeHandler = (event) => {
-    setCurrSavings(event.target.value);
-  };
-  const yearlySavingsChangeHandler = (event) => {
-    setYearlySavings(event.target.value);
-  };
-  const expectedInterestChangeHandler = (event) => {
-    setExpectedInterest(event.target.value);
-  };
-  const investmentDurationChangeHandler = (event) => {
-    setInvestmentDuration(event.target.value);
+  const inputChangehandler = (input, value) => {
+    setUserInput((prev) => {
+      return {
+        ...prev,
+        [input]: value,
+      };
+    });
   };
 
-  const resetInputsHandler = () => {
-    setCurrSavings();
-    setYearlySavings();
-    setExpectedInterest();
-    setInvestmentDuration();
+  const submitHandler = (event) => {
+    event.preventDefault();
+
+    props.onSubmit(userUnput);
   };
+
   return (
-    <form className={styles.form} onSubmit={props.onSubmit}>
+    <form className={styles.form} onSubmit={submitHandler}>
       <div className={styles.inputGroup}>
         <p>
           <label htmlFor="current-savings">Current Savings ($)</label>
           <input
             type="number"
             id="current-savings"
-            onChange={currSavingsChangeHandler}
+            onChange={(event) =>
+              inputChangehandler("current-savings", event.target.value)
+            }
           />
         </p>
         <p>
@@ -43,7 +43,9 @@ function CalculatorForm(props) {
           <input
             type="number"
             id="yearly-contribution"
-            onChange={yearlySavingsChangeHandler}
+            onChange={(event) =>
+              inputChangehandler("yearly-contribution", event.target.value)
+            }
           />
         </p>
       </div>
@@ -55,7 +57,9 @@ function CalculatorForm(props) {
           <input
             type="number"
             id="expected-return"
-            onChange={expectedInterestChangeHandler}
+            onChange={(event) =>
+              inputChangehandler("expected-return", event.target.value)
+            }
           />
         </p>
         <p>
@@ -63,16 +67,14 @@ function CalculatorForm(props) {
           <input
             type="number"
             id="duration"
-            onChange={investmentDurationChangeHandler}
+            onChange={(event) =>
+              inputChangehandler("duration", event.target.value)
+            }
           />
         </p>
       </div>
       <p className={styles.actions}>
-        <button
-          type="reset"
-          className={styles.buttonAlt}
-          onClick={resetInputsHandler}
-        >
+        <button type="reset" className={styles.buttonAlt}>
           Reset
         </button>
         <button type="submit" className={styles.button}>
