@@ -1,11 +1,11 @@
 import styles from "./Button.module.css";
 
-function Button(props) {
+const Button = (props) => {
   return (
     <button className={styles.button} type="submit" onClick={props.onClick}>
       {props.children}
     </button>
   );
-}
+};
 
 export default Button;

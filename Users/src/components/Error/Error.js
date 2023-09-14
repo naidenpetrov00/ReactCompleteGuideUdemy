@@ -2,7 +2,7 @@ import Card from "../UI/Card";
 import Button from "../UI/Button";
 import styles from "./Error.module.css";
 
-function Error(props) {
+const Error = (props) => {
   return (
     <div className={styles.backdrop} onClick={props.onConfirm}>
       <Card className={styles.modal}>
@@ -18,6 +18,6 @@ function Error(props) {
       </Card>
     </div>
   );
-}
+};
 
 export default Error;

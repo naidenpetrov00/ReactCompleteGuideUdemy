@@ -1,4 +1,4 @@
-function User({ userModel }) {
+const User = ({ userModel }) => {
   return (
     <li>
       <p>
@@ -6,6 +6,6 @@ function User({ userModel }) {
       </p>
     </li>
   );
-}
+};
 
 export default User;

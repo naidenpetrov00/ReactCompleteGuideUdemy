@@ -4,7 +4,7 @@ import Button from "../UI/Button";
 import Error from "../Error/Error";
 import styles from "./AddUser.module.css";
 
-function AddUser(props) {
+const AddUser = (props) => {
   const [isValid, setIsValid] = useState(true);
   const [userModel, setUserModel] = useState({
     id: "",
@@ -50,15 +50,16 @@ function AddUser(props) {
           <label htmlFor="username">Username</label>
           <input
             id="username"
+            type="text"
             onChange={(event) => inputHandler(event)}
           ></input>
           <label htmlFor="age">Age</label>
-          <input id="age" onChange={inputHandler}></input>
+          <input id="age" type="number" onChange={inputHandler}></input>
           <Button>Add User</Button>
         </form>
       </Card>
     </div>
   );
-}
+};
 
 export default AddUser;
