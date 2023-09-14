@@ -1,0 +1,21 @@
+.form {
+  padding: 1rem;
+}
+
+.input label {
+  font-size: small;
+  display: block;
+  margin-bottom: 2px;
+
+  /* color: crimson; */
+}
+
+.input input {
+  font-size: medium;
+  padding: 0.15rem;
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+
+  /* background: rgba(220, 20, 60, 0.221); */
+}
