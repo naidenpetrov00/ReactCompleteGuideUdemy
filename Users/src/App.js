@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import AddUser from "./components/User/AddUser";
 import UsersList from "./components/User/UsersList";
 
@@ -14,10 +15,10 @@ const App = () => {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <AddUser onSubmit={addUser} />
       {users.length > 0 && <UsersList users={users} />}
-    </div>
+    </React.Fragment>
   );
 };
 
