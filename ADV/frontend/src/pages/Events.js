@@ -1,37 +1,31 @@
-import EventItem from "../components/EventItem";
+import { Fragment } from "react";
+import { useLoaderData } from "react-router-dom";
 
-const EVENTS = [
-  {
-    id: "e1",
-    image: "photo",
-    date: "18.10.2023",
-    description: "must do",
-    title: "carwash",
-  },
-  {
-    id: "e2",
-    image: "photo",
-    date: "18.10.2023",
-    description: "must do",
-    title: "shop",
-  },
-  {
-    id: "e3",
-    image: "photo",
-    date: "18.10.2023",
-    description: "must do",
-    title: "cinema",
-  },
-];
+import EventsList from "../components/EventsList";
 
-const EventsPage = () => {
+function EventsPage() {
+  const data = useLoaderData();
+
+  if (data.isError) {
+    return <p>{data.message}</p>;
+  }
+  const events = data.events;
+
   return (
-    <ul>
-      {EVENTS.map((e) => (
-        <EventItem key={e.id} event={e} />
-      ))}
-    </ul>
+    <Fragment>
+      <EventsList events={events} />
+    </Fragment>
   );
-};
+}
 
 export default EventsPage;
+
+export async function loader() {
+  const response = await fetch("http://localhost:8080/events");
+
+  if (!response.ok) {
+    throw { message: "Could not fetch events!" };
+  } else {
+    return response;
+  }
+}
