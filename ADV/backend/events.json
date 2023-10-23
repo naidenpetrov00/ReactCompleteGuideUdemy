@@ -1,11 +1,1 @@
-{
-  "events": [
-    {
-      "id": "e1",
-      "title": "A dummy event",
-      "date": "2023-02-22",
-      "image": "https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg",
-      "description": "Join this amazing event and connect with fellow developers."
-    }
-  ]
-}
+{"events":[{"title":"op","image":"https://www.google.com/search?q=random+images&tbm=isch&ved=2ahUKEwjv5t72y4yCAxU1micCHbVVBiMQ2-cCegQIABAA&oq=random+im&gs_lcp=CgNpbWcQARgBMgUIABCABDIFCAAQgAQyBAgAEB4yBAgAEB4yBAgAEB4yBAgAEB4yBAgAEB4yBAgAEB4yBAgAEB4yBAgAEB46BAgjECc6BwgAEIoFEENQpQlY6wtgsxdoAHAAeACAAXCIAfsCkgEDMy4xmAEAoAEBqgELZ3dzLXdpei1pbWfAAQE&sclient=img&ei=u582Za-dMrW0nsEPtauZmAI&bih=715&biw=1536#imgrc=hbXVK53csZJ90M","date":"2023-10-04","description":"op","id":"7b730a7b-f85c-47cf-9fbd-a25401613dd6"},{"title":"SABAKAAA","image":"https://www.google.com/search?q=random+images&tbm=isch&ved=2ahUKEwjv5t72y4yCAxU1micCHbVVBiMQ2-cCegQIABAA&oq=random+im&gs_lcp=CgNpbWcQARgBMgUIABCABDIFCAAQgAQyBAgAEB4yBAgAEB4yBAgAEB4yBAgAEB4yBAgAEB4yBAgAEB4yBAgAEB4yBAgAEB46BAgjECc6BwgAEIoFEENQpQlY6wtgsxdoAHAAeACAAXCIAfsCkgEDMy4xmAEAoAEBqgELZ3dzLXdpei1pbWfAAQE&sclient=img&ei=u582Za-dMrW0nsEPtauZmAI&bih=715&biw=1536#imgrc=hbXVK53csZJ90M","date":"2023-10-23","description":"TONQQQQ","id":"e3a64c4b-e198-44e9-87c8-964603a7caf1"},{"id":"e1","title":"A dummy event","date":"2023-02-22","image":"https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg","description":"Join this amazing event and connect with fellow developers."}]}
