@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 import EventsNavigation from "../components/EventsNavigation";
 
-const EventRootLayout = () => {
+const EventsRootLayout = () => {
   return (
     <Fragment>
       <EventsNavigation />
@@ -12,4 +12,4 @@ const EventRootLayout = () => {
   );
 };
 
-export default EventRootLayout;
+export default EventsRootLayout;
