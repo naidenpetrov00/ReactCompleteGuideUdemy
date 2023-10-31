@@ -8,8 +8,10 @@ import LoadingIndicator from "../UI/LoadingIndicator.jsx";
 
 export default function NewEventsSection() {
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["events"],
-    queryFn: fetchEvents,
+    queryKey: ["events", { max: 3 }],
+    queryFn: ({ signal }) => {
+      return fetchEvents({ signal, max: 3 });
+    },
     staleTime: 5000,
   });
 
