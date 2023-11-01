@@ -1,44 +1,24 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import {
+  Link,
+  redirect,
+  useNavigate,
+  useParams,
+  useSubmit,
+} from "react-router-dom";
 
-import { fetchEvent, updateEvent } from "../../util/http.js";
+import { fetchEvent, queryClient, updateEvent } from "../../util/http.js";
 
 import Modal from "../UI/Modal.jsx";
 import EventForm from "./EventForm.jsx";
-import LoadingIndicator from "../UI/LoadingIndicator.jsx";
 import ErrorBlock from "../UI/ErrorBlock.jsx";
 
 export default function EditEvent() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const params = useParams();
+  const submit = useSubmit();
 
-  const { mutate } = useMutation({
-    mutationFn: updateEvent,
-    onMutate: async (data) => {
-      await queryClient.cancelQueries({
-        queryKey: ["events", { search: params.id }],
-      });
-      const previousEvent = queryClient.getQueryData([
-        "events",
-        { search: params.id },
-      ]);
-      queryClient.setQueryData(["events", { search: params.id }], data.event);
-
-      return { previousEvent };
-    },
-    onError: (error, data, context) => {
-      queryClient.setQueryData(
-        ["events", { search: params.id }],
-        context.previousEvent
-      );
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries(["events"]);
-    },
-  });
-
-  const { data, isPending, isError, error } = useQuery({
+  const { data, isError, error } = useQuery({
     queryKey: ["events", { search: params.id }],
     queryFn: ({ signal }) => {
       return fetchEvent({ id: params.id, signal });
@@ -46,8 +26,7 @@ export default function EditEvent() {
   });
 
   function handleSubmit(formData) {
-    mutate({ id: params.id, event: formData });
-    navigate("../");
+    submit(formData, { method: "PUT" });
   }
 
   function handleClose() {
@@ -56,7 +35,6 @@ export default function EditEvent() {
 
   return (
     <Modal onClose={handleClose}>
-      {isPending && <LoadingIndicator />}
       {isError && (
         <ErrorBlock
           title="Could not fetch event Details"
@@ -75,4 +53,23 @@ export default function EditEvent() {
       )}
     </Modal>
   );
+}
+
+export function loader({ params }) {
+  return queryClient.fetchQuery({
+    queryKey: ["events", { search: params.id }],
+    queryFn: ({ signal }) => {
+      return fetchEvent({ id: params.id, signal });
+    },
+  });
+}
+
+export async function action({ request, params }) {
+  const formData = await request.formData();
+  const updatedEventData = Object.fromEntries(formData);
+
+  await updateEvent({ id: params.id, event: updatedEventData });
+  await queryClient.invalidateQueries(["events"]);
+
+  return redirect("../");
 }
