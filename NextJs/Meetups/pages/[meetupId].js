@@ -1,42 +1,57 @@
+import { MongoClient, ObjectId } from "mongodb";
 import MeetupDetail from "../components/meetups/MeetupDetail";
+import Head from "next/head";
+import { Fragment } from "react";
 
-const MeetupDetailsPage = () => {
+const MeetupDetailsPage = (props) => {
   return (
-    <MeetupDetail
-      alt="First Meeetup"
-      title="First Meeetup"
-      address="Street 1"
-      description="The first metup"
-    />
+    <Fragment>
+      <Head>
+        <title>{props.meetupData.title}</title>
+        <meta name="description" content={props.meetupData.description} />
+      </Head>
+      <MeetupDetail
+        image={props.meetupData.image}
+        alt={props.meetupData.title}
+        title={props.meetupData.title}
+        address={props.meetupData.address}
+        description={props.meetupData.description}
+      />
+    </Fragment>
   );
 };
 
 export const getStaticPaths = async () => {
+  const client = await MongoClient.connect(
+    "mongodb+srv://testAdmin123:testAdmin123@cluster0.hioqsee.mongodb.net/?retryWrites=true&w=majority"
+  );
+  const db = client.db();
+  const meetupsCollection = db.collection("meetups");
+  const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray();
+  client.close();
+
   return {
     fallback: false,
-    paths: [
-      {
-        params: { meetupId: "m1" },
-      },
-      {
-        params: { meetupId: "m2" },
-      },
-    ],
+    paths: meetups.map((m) => ({ params: { meetupId: m._id.toString() } })),
   };
 };
 
 export const getStaticProps = async (context) => {
-  const meetupId = context.params.meetupId;
+  const client = await MongoClient.connect(
+    "mongodb+srv://testAdmin123:testAdmin123@cluster0.hioqsee.mongodb.net/?retryWrites=true&w=majority"
+  );
+  const db = client.db();
+  const meetupsCollection = db.collection("meetups");
+  const selectedMeetup = await meetupsCollection.findOne({
+    _id: new ObjectId(context.params.meetupId),
+  });
+  client.close();
 
   return {
     props: {
       meetupData: {
-        id: { meetupId },
-        title: "First Meetup",
-        address: "Street 1",
-        description: "The First Meeting",
-        image:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg/800px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg",
+        ...selectedMeetup,
+        _id: selectedMeetup._id.toString(),
       },
     },
   };
